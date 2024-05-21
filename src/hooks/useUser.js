@@ -1,4 +1,4 @@
-/** This hook is to get the user information */
+/** This hook is to get the user information from firebase store about the logged in user*/
 
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";

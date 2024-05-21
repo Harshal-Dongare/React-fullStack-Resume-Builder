@@ -1,6 +1,7 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -12,25 +13,23 @@ const firebaseConfig = {
     appId: import.meta.VITE_APP_ID,
 };
 
-// Firebase App Initialization Check and Setup
-/**
- * Check if there is already an app initialized, if not, then create a new one
- * using the configuration object passed.
- *
- * @param {Object} firebaseConfig - The configuration object for the app
- * @returns {FirebaseApp} - The app instance
- */
+// Initialize Firebase App
 const app =
     getApps.length > 0
         ? getApp() // if there is an app, return it
         : initializeApp(firebaseConfig); // if not, create a new one and return it
 
-/**
- * Initializes the Firebase Authentication service using the getAuth function with the Firebase app instance app.
- * It allows you to use Firebase Authentication features in your application.*/
+/*
+ * Initializes the `Firebase Authentication Service` using the getAuth function with the Firebase app instance app.
+ * It allows you to use `Firebase Authentication features` such as Email/Password authentication, Social Authentication in your application.
+ */
 const auth = getAuth(app);
 
-/** Initialize the Firebase Firestore database service which allows you to interact with the Firestore database in your application. */
+/*
+ * Initialize the `Firebase Firestore Database Service` which allows you to interact with the Firestore database in your application.
+ */
 const db = getFirestore(app);
 
-export { auth, db };
+const storage = getStorage(app);
+
+export { auth, db, storage };

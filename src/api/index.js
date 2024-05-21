@@ -1,6 +1,8 @@
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, onSnapshot, orderBy, query, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase.config";
+import { collection } from "firebase/firestore";
 
+// Method to get authenticated user detail
 export const getUserDetail = () => {
     return new Promise((resolve, reject) => {
         //* After successful login using google or Github, we get user credentials
@@ -41,5 +43,20 @@ export const getUserDetail = () => {
             // Make sure to unsubscribe from the listener to prevent memory leaks
             unsubscribe();
         });
+    });
+};
+
+// A method to get the total number of templates in the firebase store
+export const getTemplates = () => {
+    return new Promise((resolve, reject) => {
+        const templateQuery = query(
+            collection(db, "templates"),
+            orderBy("timestamp", "asc")
+        );
+        const unsubscribed = onSnapshot(templateQuery, (querySnap) => {
+            const templates = querySnap.docs.map((doc) => doc.data());
+            resolve(templates);
+        });
+        return unsubscribed;
     });
 };
